@@ -9,7 +9,11 @@ const MasterLayout = dynamic(() => import("../components/layout/Layout"));
 const Home: NextPage = () => {
   const title = "Share your creativity with your story";
 
-  return <MasterLayout title={title}></MasterLayout>;
+  return (
+    <MasterLayout title={title}>
+      
+    </MasterLayout>
+  );
 };
 
 export default Home;

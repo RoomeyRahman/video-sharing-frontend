@@ -1,6 +1,10 @@
 import React from "react";
 import Head from "next/head";
 import Script from "next/script";
+import dynamic from "next/dynamic";
+
+const Navbar = dynamic(() => import("./Navbar"));
+
 
 type IProps = {
   title: string;
@@ -42,6 +46,7 @@ class Header extends React.Component<IProps, IState> {
           <link rel="apple-touch-icon" href="/icons/192.png" />
           <title>{this.props.title}</title>
         </Head>
+        <Navbar />
       </React.Fragment>
     );
   }
