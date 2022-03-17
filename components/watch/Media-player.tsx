@@ -11,7 +11,7 @@ type IProps = {
 const MediaPlayer: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
     <div className="bg-gray-50 py-6 flex flex-col justify-center relative overflow-hidden sm:py-12">
-      <div className="container mx-auto px-5 py-10">
+      <div className="mx-auto px-5">
         <div className="aspect-w-16 aspect-h-9">
           <ReactPlayer
             url={props.url}

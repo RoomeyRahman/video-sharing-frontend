@@ -12,7 +12,7 @@ type IProps = {
 
 const VideoCard: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
-    <div className="p-10">
+    <div className="p-2">
       <div className="max-w-sm rounded overflow-hidden shadow-lg">
         <Img
           className="w-full"
