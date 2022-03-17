@@ -18,3 +18,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.bg-color {
+  background: linear-gradient(to right, #00214f 0%, #ad2ace 100%);
+}

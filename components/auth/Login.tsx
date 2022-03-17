@@ -121,7 +121,7 @@ function Login(params: any) {
 
           <p className="mt-8">
             {" "}
-            New to iLafe?{" "}
+            New here?{" "}
             <span className="cursor-pointer text-sm text-blue-600">
               <Link href="/signup" passHref>
                 Register now for FREE!
