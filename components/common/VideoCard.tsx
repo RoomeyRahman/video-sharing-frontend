@@ -1,4 +1,8 @@
 import React from "react";
+import dynamic from "next/dynamic";
+
+const Img = dynamic(() => import("./Image-loader"));
+
 
 type IProps = {};
 type IState = {};
@@ -8,7 +12,15 @@ class VideoCard extends React.Component<IProps, IState> {
     return (
       <div className="p-10">
         <div className="max-w-sm rounded overflow-hidden shadow-lg">
-          <img className="w-full" src="/mountain.jpg" alt="Mountain" />
+            <Img
+                className="w-full"
+                src="/mountain.jpg"
+                alt="Mountain"
+                width={1200}
+                height={800}
+                quality={100}
+                layout="intrinsic"
+            />
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2">Mountain</div>
             <p className="text-gray-700 text-base">
