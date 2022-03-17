@@ -9,7 +9,14 @@ const Watch: NextPage = () => {
 
   return (
     <MasterLayout title={title}>
-      <MediaPlayer />
+      <MediaPlayer
+        url={"https://www.youtube.com/watch?v=Rq5SEhs9lws"}
+        light={"/mountain.jpg"}
+        title={"Mountain"}
+        description={`Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        Voluptatibus quia, Nonea! Maiores et perferendis eaque,
+        exercitationem praesentium nihil.`}
+      />
     </MasterLayout>
   );
 };

@@ -1,24 +1,30 @@
-import React, { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
+import React from "react";
 import ReactPlayer from "react-player";
 
-const Img = dynamic(() => import("../common/Image-loader"));
-
-type IProps = {};
+type IProps = {
+  url: string;
+  light: string;
+  title: string;
+  description: string;
+};
 
 const MediaPlayer: React.FunctionComponent<IProps> = (props: IProps) => {
-  const [isPlaying, setisPlaying] = useState(false);
-
   return (
-    <div className="bg-white">
+    <div className="bg-gray-50 py-6 flex flex-col justify-center relative overflow-hidden sm:py-12">
       <div className="container mx-auto px-5 py-10">
-        <ReactPlayer
-          url="/Deathstroke.mkv"
-          controls
-          light={"/mountain.jpg"}
-          volume={1}
-          muted={false}
-        />
+        <div className="aspect-w-16 aspect-h-9">
+          <ReactPlayer
+            url={props.url}
+            controls
+            light={props.light}
+            width="920px"
+            height="500px"
+          />
+        </div>
+        <div>
+          <div className="font-bold text-xl mb-2">{props.title}</div>
+          <p className="text-gray-700 text-base">{props.description}</p>
+        </div>
       </div>
     </div>
   );
