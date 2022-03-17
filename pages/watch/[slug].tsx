@@ -6,10 +6,10 @@ const MasterLayout = dynamic(() => import("../../components/layout/Layout"));
 const MediaPlayer = dynamic(
   () => import("../../components/watch/Media-player")
 );
-const VideoCard = dynamic(() => import("../../components/common/VideoCard"));
+const VideoCardMin = dynamic(() => import("../../components/common/VideoCardMin"));
 
 const video = {
-  thumbnail: "/mountain.jpg",
+  thumbnail: "https://source.unsplash.com/WLUHO9A_xik/1600x900",
   title: "Mountain",
   description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
   Voluptatibus quia, Nonea! Maiores et perferendis eaque,
@@ -24,7 +24,7 @@ const Watch: NextPage = () => {
     <MasterLayout title={title}>
       <div className="container mx-auto px-5 pb-8 lg:pb-10 py-5 lg:py-4">
         <Row gutter={24}>
-          <Col className="gutter-row" xs={24} lg={17}>
+          <Col className="gutter-row" xs={24} lg={16}>
             <MediaPlayer
               url={"https://www.youtube.com/watch?v=Rq5SEhs9lws"}
               light={"/mountain.jpg"}
@@ -34,8 +34,8 @@ const Watch: NextPage = () => {
               exercitationem praesentium nihil.`}
             />
           </Col>
-          <Col className="gutter-row" xs={24} lg={7}>
-            <VideoCard
+          <Col className="gutter-row" xs={24} lg={8}>
+            <VideoCardMin
               thumbnail={video.thumbnail}
               title={video.title}
               description={video.description}
