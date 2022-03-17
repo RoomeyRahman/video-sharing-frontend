@@ -2,6 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 const Header = dynamic(() => import("../common/Header"));
+const Footer = dynamic(() => import("../common/Footer"));
 
 const Layout = ({
   title,
@@ -14,6 +15,7 @@ const Layout = ({
     <React.Fragment>
       <Header title={title} />
       <div>{children}</div>
+      <Footer />
     </React.Fragment>
   );
 };
