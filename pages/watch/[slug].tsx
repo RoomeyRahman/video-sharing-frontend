@@ -6,7 +6,7 @@ const MasterLayout = dynamic(() => import("../../components/layout/Layout"));
 const MediaPlayer = dynamic(
   () => import("../../components/watch/Media-player")
 );
-const VideoCardMin = dynamic(() => import("../../components/common/VideoCardMin"));
+const Recomended = dynamic(() => import("../../components/watch/Recommended-video"));
 
 const video = {
   thumbnail: "https://source.unsplash.com/WLUHO9A_xik/1600x900",
@@ -35,12 +35,7 @@ const Watch: NextPage = () => {
             />
           </Col>
           <Col className="gutter-row" xs={24} lg={8}>
-            <VideoCardMin
-              thumbnail={video.thumbnail}
-              title={video.title}
-              description={video.description}
-              tags={video.tags}
-            />
+            <Recomended />
           </Col>
         </Row>
       </div>

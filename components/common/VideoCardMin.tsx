@@ -6,8 +6,6 @@ const Img = dynamic(() => import("./Image-loader"));
 type IProps = {
   thumbnail: string;
   title: string;
-  description: string;
-  tags: string[];
 };
 
 const VideoCardMin: React.FunctionComponent<IProps> = (props: IProps) => {
