@@ -13,13 +13,13 @@ const Home: NextPage = () => {
   return (
     <MasterLayout title={title}>
       <div className="container mx-auto my-5 p-5">
-        <div className="md:flex no-wrap md:-mx-2 ">
+        <div className="md:flex md:-mx-2 ">
           <div className="w-full md:w-3/12 md:mx-2">
             <ProfileCard />
             <div className="my-4"></div>
           </div>
-          <div className="w-full md:w-9/12 mx-2 h-64">
-          
+          <div className="w-full md:w-9/12 mx-2">
+            <VideoBlock />
           </div>
         </div>
       </div>

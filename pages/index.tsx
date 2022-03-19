@@ -9,7 +9,9 @@ const Home: NextPage = () => {
 
   return (
     <MasterLayout title={title}>
-      <VideoBlock />
+      <div className="container mx-auto">
+        <VideoBlock />
+      </div>
     </MasterLayout>
   );
 };

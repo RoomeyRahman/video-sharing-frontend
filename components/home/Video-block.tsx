@@ -8,7 +8,7 @@ type IState = {};
 
 const videos = [
   {
-    thumbnail: "/mountain.jpg",
+    thumbnail: "https://wallpaperaccess.com/full/3458146.jpg",
     title: "Mountain",
     description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
     Voluptatibus quia, Nonea! Maiores et perferendis eaque,
@@ -16,7 +16,7 @@ const videos = [
     tags: ["photography", "nature"],
   },
   {
-    thumbnail: "/mountain.jpg",
+    thumbnail: "https://www.seekpng.com/png/full/619-6199498_nebolous-agario-and-mitosis-thumbnail-effects.png",
     title: "Mountain",
     description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
     Voluptatibus quia, Nonea! Maiores et perferendis eaque,
@@ -24,7 +24,7 @@ const videos = [
     tags: ["photography", "nature"],
   },
   {
-    thumbnail: "/mountain.jpg",
+    thumbnail: "https://pngbackground.com/files/preview/1280x732/11626402992wovfkga0onkeklrheqfomnmcosphur25ds9j5qxwi60p4r22crituf0s4d7eseh4wou7tjrzgnsgmteftukqbgpplxwfmz4dygpo.jpg",
     title: "Mountain",
     description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
     Voluptatibus quia, Nonea! Maiores et perferendis eaque,
@@ -32,7 +32,7 @@ const videos = [
     tags: ["photography", "nature"],
   },
   {
-    thumbnail: "/mountain.jpg",
+    thumbnail: "https://pngbackground.com/files/preview/1280x732/11626402992wovfkga0onkeklrheqfomnmcosphur25ds9j5qxwi60p4r22crituf0s4d7eseh4wou7tjrzgnsgmteftukqbgpplxwfmz4dygpo.jpg",
     title: "Mountain",
     description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
     Voluptatibus quia, Nonea! Maiores et perferendis eaque,
@@ -40,7 +40,7 @@ const videos = [
     tags: ["photography", "nature"],
   },
   {
-    thumbnail: "/mountain.jpg",
+    thumbnail: "https://pngbackground.com/files/preview/1280x732/11626402992wovfkga0onkeklrheqfomnmcosphur25ds9j5qxwi60p4r22crituf0s4d7eseh4wou7tjrzgnsgmteftukqbgpplxwfmz4dygpo.jpg",
     title: "Mountain",
     description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
     Voluptatibus quia, Nonea! Maiores et perferendis eaque,
@@ -48,7 +48,7 @@ const videos = [
     tags: ["photography", "nature"],
   },
   {
-    thumbnail: "/mountain.jpg",
+    thumbnail: "https://pngbackground.com/files/preview/1280x732/11626402992wovfkga0onkeklrheqfomnmcosphur25ds9j5qxwi60p4r22crituf0s4d7eseh4wou7tjrzgnsgmteftukqbgpplxwfmz4dygpo.jpg",
     title: "Mountain",
     description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
     Voluptatibus quia, Nonea! Maiores et perferendis eaque,
@@ -56,7 +56,7 @@ const videos = [
     tags: ["photography", "nature"],
   },
   {
-    thumbnail: "/mountain.jpg",
+    thumbnail: "https://pngbackground.com/files/preview/1280x732/11626402992wovfkga0onkeklrheqfomnmcosphur25ds9j5qxwi60p4r22crituf0s4d7eseh4wou7tjrzgnsgmteftukqbgpplxwfmz4dygpo.jpg",
     title: "Mountain",
     description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
     Voluptatibus quia, Nonea! Maiores et perferendis eaque,
@@ -64,7 +64,7 @@ const videos = [
     tags: ["photography", "nature"],
   },
   {
-    thumbnail: "/mountain.jpg",
+    thumbnail: "https://pngbackground.com/files/preview/1280x732/11626402992wovfkga0onkeklrheqfomnmcosphur25ds9j5qxwi60p4r22crituf0s4d7eseh4wou7tjrzgnsgmteftukqbgpplxwfmz4dygpo.jpg",
     title: "Mountain",
     description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
     Voluptatibus quia, Nonea! Maiores et perferendis eaque,
@@ -77,9 +77,9 @@ class VideoBlock extends React.Component<IProps, IState> {
   render() {
     return (
       <div className="bg-white">
-        <div className="container mx-auto px-5 py-10">
+        <div className="px-5 py-10">
           {/* <h2 className="text-3xl text-center lg:mb-9">Recent Service</h2> */}
-          <div className="flex flex-wrap justify-between text-center">
+          <div className="flex flex-wrap justify-between">
             {videos &&
               Array.isArray(videos) &&
               videos.length > 0 &&
@@ -87,9 +87,9 @@ class VideoBlock extends React.Component<IProps, IState> {
                 return (
                   <div
                     key={index}
-                    className="md:w-1/2 lg:w-1/4 transform hover:scale-105 duration-300 transition-transform"
+                    className="md:w-1/2 lg:w-1/4 transform hover:scale-102 duration-300 transition-transform"
                   >
-                    <div className="p-1 w-full rounded-md">
+                    <div className="p-1 w-full rounded-md ">
                       <VideoCard
                         thumbnail={video.thumbnail}
                         title={video.title}
