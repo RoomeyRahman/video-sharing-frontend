@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Space, Affix, Menu, Dropdown, Avatar, Badge } from "antd";
+import Router from "next/router";
 import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
 import {
@@ -86,11 +87,20 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const [isLogin, setIsLogin] = useState(false);
+  const [me, setMe] = useState({});
 
   useEffect(() => {
     const cookies = cookie.parse(document.cookie);
     if (cookies && cookies.hasOwnProperty("token") && cookies.token) {
       setIsLogin(true);
+    }
+    if (cookies && cookies.hasOwnProperty("me") && cookies.me) {
+      import("../../utils/helper").then((fn) => {
+        const me = fn.decrypt(cookies.me);
+        console.log(me)
+        setMe(me);
+      });
+      
     }
   }, []);
 
@@ -113,84 +123,47 @@ export default function Navbar() {
     );
   };
 
-  // const renderLoginRightMenu = () => {
-  //   const name =
-  //     ((me.hasOwnProperty("firstName") && me.firstName + " ") || "") +
-  //     ((me.hasOwnProperty("lastName") && me.lastName) || "");
-  //   const image =
-  //     (me.hasOwnProperty("profilePic") &&
-  //       me.profilePic.hasOwnProperty("uri") &&
-  //       me.profilePic.uri) ||
-  //     null;
-  //   const callLogout = async () => {
-  //     try {
-  //       const responseLogout = await fetch("/api/logout", { method: "POST" });
-  //       if (responseLogout) {
-  //         window.location.reload();
-  //       }
-  //     } catch (error) {
-  //       // console.log("error")
-  //     }
-  //   };
-  //   const updateNotificationCount=()=>{}
-  //   const menu = (
-  //     <Menu className="origin-top-right absolute right-0 uppercase mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-  //       <Menu.Item key="5">
-  //         <span className="font-semibold whitespace-normal">
-  //           <Avatar src={image} /> {name}
-  //         </span>
-  //       </Menu.Item>
-  //       <Menu.Divider />
-  //       <Menu.Item key="0" onClick={() => router.push("/dashboard")}>
-  //         <a>Dashboard</a>
-  //       </Menu.Item>
-  //       <Menu.Item key="1" onClick={() => router.push("/projects")}>
-  //         <a>Projects</a>
-  //       </Menu.Item>
-  //       <Menu.Item key="2" onClick={() => router.push("/reviews")}>
-  //         <a>Reviews</a>
-  //       </Menu.Item>
-  //       <Menu.Item key="3" onClick={() => router.push("/favourite")}>
-  //         <a>Favourite</a>
-  //       </Menu.Item>
-  //       <Menu.Item key="4" onClick={() => router.push("/profile")}>
-  //         <a>Profile and Settings</a>
-  //       </Menu.Item>
-  //       <Menu.Item key="5" onClick={() => router.push("/refer")}>
-  //         <a>Refer Friends</a>
-  //       </Menu.Item>
-  //       <Menu.Divider />
-  //       <Menu.Item key="6" onClick={() => callLogout()}>
-  //         Logout
-  //       </Menu.Item>
-  //     </Menu>
-  //   );
+  const renderLoginRightMenu = () => {
+    const name = me['username']
+    
+    const callLogout = async () => {
+      try {
+        const responseLogout = await fetch("/api/logout", { method: "POST" });
+        if (responseLogout) {
+          window.location.reload();
+        }
+      } catch (error) {
+        // console.log("error")
+      }
+    };
+    const menu = (
+      <Menu className="origin-top-right absolute right-0 uppercase mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Item key="5">
+          <span className="font-semibold whitespace-normal">
+            <Avatar src={'/avatar.jpg'} /> {name}
+          </span>
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="4" onClick={() => Router.push("/profile")}>
+          <a>Profile</a>
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="6" onClick={() => callLogout()}>
+          Logout
+        </Menu.Item>
+      </Menu>
+    );
 
-  //   return (
-  //     <>
-  //       <Notification token={props.token} />
-
-  //       {/* <Dropdown overlay={<Message />} trigger={["click"]} className="ml-3 relative">
-  //         <button
-  //           type="button"
-  //           className="bg-gray-800 py-1 px-2 rounded-full text-gray-400 ml-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-  //         >
-  //           <span className="sr-only">View Chat</span>
-  //           <i className="text-xl fa fa-commenting" aria-hidden="true"></i>
-  //         </button>
-  //       </Dropdown> */}
-
-
-  //       {/* Profile dropdown */}
-  //       <Dropdown overlay={menu} trigger={["click"]} className="ml-3 relative">
-  //         <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-  //           <Avatar src={image} />
-  //         </a>
-  //       </Dropdown>
-  //     </>
-  //   );
-  // };
-
+    return (
+      <>
+        <Dropdown overlay={menu} trigger={["click"]} className="ml-3 relative">
+          <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+            <Avatar src={'/avatar.jpg'} />
+          </a>
+        </Dropdown>
+      </>
+    );
+  };
 
   return (
     <Popover className="relative bg-white">
@@ -208,9 +181,8 @@ export default function Navbar() {
           </div>
 
           <div className="right-0 md:flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 sm:order-4">
-            {isLogin ? <></> : renderLogoutRightMenu()}
+            {isLogin ? renderLoginRightMenu() : renderLogoutRightMenu()}
           </div>
-  
         </div>
       </div>
 
