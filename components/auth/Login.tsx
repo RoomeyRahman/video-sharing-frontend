@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import Link from "next/link";
+import Router from "next/router";
 import dynamic from "next/dynamic";
 import { Form, Input, Button, Checkbox, Alert } from "antd";
 
@@ -41,27 +42,20 @@ function Login(params: any) {
       switch (response.status) {
         case 200:
           const { access, refresh } = response.data;
-          // const cookieSaved = await fetch("/api/login", {
-          //   method: "POST",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //   },
-          //   body: JSON.stringify({ token: token, me: me, tokenMaxAge: maxAge }),
-          // });
+          const maxAge = 864000000 ;
+          const cookieSaved = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token: access, refresh: refresh, tokenMaxAge: maxAge }),
+          });
 
-          // if (Router.pathname !== "/login") {
-          //   saveLoginModal(false);
-          //   // Router.reload()
-          //   window.location.reload();
-          // } else if (cookieSaved.status === 200) {
-          //   window.location.reload();
-          //   // Router.push("/");
-          // } else {
-          //   setAlertMessage({
-          //     message: t("modalMsg.SIGN_UP.SOMETHING_WENT_WRONG"),
-          //     type: "error",
-          //   });
-          // }
+          if (Router.pathname !== "/signin") {
+            window.location.reload();
+          } else  {
+            Router.push("/");
+          }
           break;
 
         case 401:
