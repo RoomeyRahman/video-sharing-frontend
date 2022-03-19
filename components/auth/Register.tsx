@@ -174,7 +174,7 @@ const Signup = () => {
             </Button>
             <div className="flex justify-center">
               <ErrorBoundary>
-                <Button type="link" onClick={() => Router.push("/login")}>
+                <Button type="link" onClick={() => Router.push("/signin")}>
                   <ArrowLeftOutlined />
                   {"Back to login"}
                 </Button>

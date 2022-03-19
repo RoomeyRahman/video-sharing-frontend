@@ -11,23 +11,79 @@ export type IAlertType = {
   type: "success" | "info" | "error";
 };
 interface IFormItems {
-  email: string;
+  username: string;
   password: string;
   remember: boolean;
-  isProvider: boolean;
 }
 
 function Login(params: any) {
   const { isModalCall = false } = params;
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [alertMessage, setAlertMessage] = useState<IAlertType|null>(null);
+  const [alertMessage, setAlertMessage] = useState<IAlertType | null>(null);
 
   const submitLoginForm = async (values: IFormItems) => {
     setIsLoading(true);
     setAlertMessage(null);
 
-    values.email = values.email.toLowerCase().trim();
-    values.isProvider = false;
+    try {
+      const response: any = await import("../../services/user.service").then(
+        async (service) => await service.postUserLogin({ data: values })
+      );
+
+      if (!response || !response.hasOwnProperty("status")) {
+        setIsLoading(false);
+        return setAlertMessage({
+          message: "Internal Server Error",
+          type: "error",
+        });
+      }
+
+      switch (response.status) {
+        case 200:
+          const { access, refresh } = response.data;
+          // const cookieSaved = await fetch("/api/login", {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          //   body: JSON.stringify({ token: token, me: me, tokenMaxAge: maxAge }),
+          // });
+
+          // if (Router.pathname !== "/login") {
+          //   saveLoginModal(false);
+          //   // Router.reload()
+          //   window.location.reload();
+          // } else if (cookieSaved.status === 200) {
+          //   window.location.reload();
+          //   // Router.push("/");
+          // } else {
+          //   setAlertMessage({
+          //     message: t("modalMsg.SIGN_UP.SOMETHING_WENT_WRONG"),
+          //     type: "error",
+          //   });
+          // }
+          break;
+
+        case 401:
+          setAlertMessage({
+            message: "No active account found with the given credentials",
+            type: "error",
+          });
+
+          break;
+
+        default:
+          setAlertMessage({
+            message: "SOMETHING_WENT_WRONG",
+            type: "error",
+          });
+      }
+    } catch (err) {
+      setAlertMessage({
+        message: "Internal Server Error",
+        type: "error",
+      });
+    }
 
     setIsLoading(false);
   };
@@ -42,16 +98,15 @@ function Login(params: any) {
       autoComplete="off"
     >
       <Form.Item
-        name="email"
+        name="username"
         rules={[
           {
             required: true,
-            message: "Please input your email!",
-            type: "email",
+            message: "Please input your username!",
           },
         ]}
       >
-        <Input placeholder={"Email"} />
+        <Input placeholder={"Username"} />
       </Form.Item>
 
       <Form.Item

@@ -1,7 +1,7 @@
 import request from "../utils/request";
 
 export async function postUserLogin(params) {
-  return request("/login", {
+  return request("/auth/login/", {
     method: "POST",
     data: (params && params.data) || {},
   });
