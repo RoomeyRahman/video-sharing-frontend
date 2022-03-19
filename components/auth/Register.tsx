@@ -39,7 +39,6 @@ const Signup = () => {
           type: "error",
         });
       }
-      console.log(response.status)
       switch (response.status) {
         case 201:
           form.resetFields();
@@ -48,14 +47,8 @@ const Signup = () => {
             message:
               "Congratulations, you have successfully created an account.",
           });
-
-          setTimeout(
-            () => console.log("need to redirect to home page"),
-            1000 * 60
-          );
           break;
         case 400:
-          // Not acceptable, user already exist
           setAlertMessage({
             message: "This email is already used for another account.",
             type: "error",
