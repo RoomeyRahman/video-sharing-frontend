@@ -26,6 +26,12 @@ export default function login(req, res) {
       sameSite: "strict",
       path: "/",
     }),
+    cookie.serialize("me", req.body.me, {
+      // secure: process.env.NODE_ENV !== "development",
+      maxAge: req.body.tokenMaxAge,
+      sameSite: "strict",
+      path: "/",
+    }),
   ]);
 
   res.statusCode = 200;

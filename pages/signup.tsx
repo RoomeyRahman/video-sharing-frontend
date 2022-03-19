@@ -15,4 +15,13 @@ const SignUp: React.FunctionComponent = () => {
     </MasterLayout>
   );
 };
+
+export function getServerSideProps({ req, res }) {
+  if (req && req.cookies.token) {
+    return { redirect: { destination: "/", permanent: false } };
+  }
+
+  return { props: {} };
+}
+
 export default SignUp;

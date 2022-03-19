@@ -14,4 +14,11 @@ export async function postUserRegistration(params) {
   });
 }
 
+export async function getUserRetrive(params) {
+  return request("/auth/user/", {
+    method: "GET",
+    data: (params && params.data) || {},
+  });
+}
+
 

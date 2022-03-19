@@ -1,4 +1,6 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { Space, Affix, Menu, Dropdown, Avatar, Badge } from "antd";
+import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
 import {
   BookmarkAltIcon,
@@ -11,6 +13,7 @@ import {
   ViewGridIcon,
   XIcon,
 } from "@heroicons/react/outline";
+const cookie = require("cookie");
 
 const solutions = [
   {
@@ -82,6 +85,113 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    const cookies = cookie.parse(document.cookie);
+    if (cookies && cookies.hasOwnProperty("token") && cookies.token) {
+      setIsLogin(true);
+    }
+  }, []);
+
+  const renderLogoutRightMenu = () => {
+    return (
+      <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+        <Space>
+          <Link href="/signin" passHref>
+            <a className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+              LOGIN
+            </a>
+          </Link>
+          <Link href="/signup" passHref>
+            <a className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+              SIGNUP
+            </a>
+          </Link>
+        </Space>
+      </div>
+    );
+  };
+
+  // const renderLoginRightMenu = () => {
+  //   const name =
+  //     ((me.hasOwnProperty("firstName") && me.firstName + " ") || "") +
+  //     ((me.hasOwnProperty("lastName") && me.lastName) || "");
+  //   const image =
+  //     (me.hasOwnProperty("profilePic") &&
+  //       me.profilePic.hasOwnProperty("uri") &&
+  //       me.profilePic.uri) ||
+  //     null;
+  //   const callLogout = async () => {
+  //     try {
+  //       const responseLogout = await fetch("/api/logout", { method: "POST" });
+  //       if (responseLogout) {
+  //         window.location.reload();
+  //       }
+  //     } catch (error) {
+  //       // console.log("error")
+  //     }
+  //   };
+  //   const updateNotificationCount=()=>{}
+  //   const menu = (
+  //     <Menu className="origin-top-right absolute right-0 uppercase mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+  //       <Menu.Item key="5">
+  //         <span className="font-semibold whitespace-normal">
+  //           <Avatar src={image} /> {name}
+  //         </span>
+  //       </Menu.Item>
+  //       <Menu.Divider />
+  //       <Menu.Item key="0" onClick={() => router.push("/dashboard")}>
+  //         <a>Dashboard</a>
+  //       </Menu.Item>
+  //       <Menu.Item key="1" onClick={() => router.push("/projects")}>
+  //         <a>Projects</a>
+  //       </Menu.Item>
+  //       <Menu.Item key="2" onClick={() => router.push("/reviews")}>
+  //         <a>Reviews</a>
+  //       </Menu.Item>
+  //       <Menu.Item key="3" onClick={() => router.push("/favourite")}>
+  //         <a>Favourite</a>
+  //       </Menu.Item>
+  //       <Menu.Item key="4" onClick={() => router.push("/profile")}>
+  //         <a>Profile and Settings</a>
+  //       </Menu.Item>
+  //       <Menu.Item key="5" onClick={() => router.push("/refer")}>
+  //         <a>Refer Friends</a>
+  //       </Menu.Item>
+  //       <Menu.Divider />
+  //       <Menu.Item key="6" onClick={() => callLogout()}>
+  //         Logout
+  //       </Menu.Item>
+  //     </Menu>
+  //   );
+
+  //   return (
+  //     <>
+  //       <Notification token={props.token} />
+
+  //       {/* <Dropdown overlay={<Message />} trigger={["click"]} className="ml-3 relative">
+  //         <button
+  //           type="button"
+  //           className="bg-gray-800 py-1 px-2 rounded-full text-gray-400 ml-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+  //         >
+  //           <span className="sr-only">View Chat</span>
+  //           <i className="text-xl fa fa-commenting" aria-hidden="true"></i>
+  //         </button>
+  //       </Dropdown> */}
+
+
+  //       {/* Profile dropdown */}
+  //       <Dropdown overlay={menu} trigger={["click"]} className="ml-3 relative">
+  //         <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+  //           <Avatar src={image} />
+  //         </a>
+  //       </Dropdown>
+  //     </>
+  //   );
+  // };
+
+
   return (
     <Popover className="relative bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -96,21 +206,11 @@ export default function Navbar() {
               />
             </a>
           </div>
-                    
-          <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-            <a
-              href="/signin"
-              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-            >
-              Sign in
-            </a>
-            <a
-              href="/signup"
-              className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-            >
-              Sign up
-            </a>
+
+          <div className="right-0 md:flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 sm:order-4">
+            {isLogin ? <></> : renderLogoutRightMenu()}
           </div>
+  
         </div>
       </div>
 
