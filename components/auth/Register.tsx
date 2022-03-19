@@ -1,12 +1,11 @@
 import React, { ReactElement, useState } from "react";
 import dynamic from "next/dynamic";
-import { Form, Input, Button, Checkbox, Modal, Alert, Typography } from "antd";
+import { Form, Input, Button, Checkbox, Alert } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import Router from "next/router";
 
 const ErrorBoundary = dynamic(() => import("../common/Error-boundary"));
 const Img = dynamic(() => import("../common/Image-loader"));
-const { Link: TypeLink } = Typography;
 
 export type IAlertType = {
   message: string | ReactElement;
@@ -24,6 +23,56 @@ const Signup = () => {
     setAlertMessage(null);
 
     values.email = values.email.toLowerCase().trim();
+    delete values.agreement;
+    try {
+      const response: any = await import("../../services/user.service").then(
+        async (service) => await service.postUserRegistration({ data: values })
+      );
+
+      console.log(response);
+      console.log(response.status);
+
+      if (!response || !response.hasOwnProperty("status")) {
+        setIsLoading(false);
+        return setAlertMessage({
+          message: "Internal Server Error",
+          type: "error",
+        });
+      }
+      console.log(response.status)
+      switch (response.status) {
+        case 201:
+          form.resetFields();
+          setAlertMessage({
+            type: "success",
+            message:
+              "Congratulations, you have successfully created an account.",
+          });
+
+          setTimeout(
+            () => console.log("need to redirect to home page"),
+            1000 * 60
+          );
+          break;
+        case 400:
+          // Not acceptable, user already exist
+          setAlertMessage({
+            message: "This email is already used for another account.",
+            type: "error",
+          });
+          break;
+        default:
+          setAlertMessage({
+            message: "Something went wrong.",
+            type: "error",
+          });
+      }
+    } catch (err) {
+      setAlertMessage({
+        message: "Internal Server Error",
+        type: "error",
+      });
+    }
 
     setIsLoading(false);
   };
@@ -32,7 +81,6 @@ const Signup = () => {
     return (
       <ErrorBoundary>
         <Form
-          // {...formItemLayout}
           form={form}
           name="register"
           onFinish={submitRegForm}
@@ -41,6 +89,18 @@ const Signup = () => {
           }}
           scrollToFirstError
         >
+          <Form.Item
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: "Please provide a username!",
+              },
+            ]}
+          >
+            <Input placeholder={"Username"} />
+          </Form.Item>
+
           <Form.Item
             name="email"
             rules={[
@@ -70,7 +130,7 @@ const Signup = () => {
           </Form.Item>
 
           <Form.Item
-            name="confirmPassword"
+            name="password2"
             dependencies={["password"]}
             hasFeedback
             rules={[

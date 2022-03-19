@@ -39,12 +39,11 @@ interface ReqParams {
 const request = (link: string, params: ReqParams, header = null) => {
   const headers = {
     "Content-Type": "application/json",
-    Authorization: "Bearer ",
   };
 
   const cookies = cookie.parse(document.cookie);
   if (cookies.token) {
-    headers.Authorization += cookies.token;
+    headers['Authorization'] = "Bearer " + cookies.token;
   }
 
   try {
@@ -72,7 +71,7 @@ const request = (link: string, params: ReqParams, header = null) => {
     if (params && params.method && params.method === "GET" && params.data) {
       confiq.params = params.data || "";
     }
-    // console.log("confiq : ", confiq)
+    console.log("confiq : ", confiq)
 
     return ax(confiq)
       .then((res) => {
