@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-
+import Link from "next/link";
+import { getVideos } from "../../services/video.service";
 const VideoCardMin = dynamic(() => import("../common/VideoCardMin"));
 
 type IProps = {};
@@ -54,7 +55,7 @@ const videos = [
     Voluptatibus quia, Nonea! Maiores et perferendis eaque,
     exercitationem praesentium nihil.`,
     tags: ["photography", "nature"],
-  },  
+  },
   {
     thumbnail: "https://source.unsplash.com/WLUHO9A_xik/1600x900",
     title: "Mountain",
@@ -81,32 +82,49 @@ const videos = [
   },
 ];
 
-class VideoBlock extends React.Component<IProps, IState> {
-  render() {
-    return (
-      <div className="bg-white">
-        <div className="container mx-auto px-5 py-10">
-            {videos &&
-              Array.isArray(videos) &&
-              videos.length > 0 &&
-              videos.map((video, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="transform hover:scale-105 duration-300 transition-transform"
-                  >
-                    <div className="p-1 w-full rounded-md">
+const VideoBlock = () => {
+  const [videos, setVideos] = useState<any>([]);
+  useEffect(() => {
+    async function fetchVideos() {
+      const response = await getVideos({});
+      const results = response.data.results;
+      console.log(results);
+      setVideos(results);
+    }
+    fetchVideos();
+  }, []);
+  return (
+    <div className="bg-white">
+      <div className="container mx-auto px-5 py-10">
+        {videos &&
+          Array.isArray(videos) &&
+          videos.length > 0 &&
+          videos.map((video, index) => {
+            return (
+              <div
+                key={index}
+                className="transform hover:scale-105 duration-300 transition-transform"
+              >
+                <div className="p-1 w-full rounded-md">
+                  <Link href={`/watch/${video.id}`} passHref>
+                    <a>
                       <VideoCardMin
-                        thumbnail={video.thumbnail}
+                        thumbnail={
+                          video.thumbnail_url ||
+                          "https://www.seekpng.com/png/full/619-6199498_nebolous-agario-and-mitosis-thumbnail-effects.png"
+                        }
                         title={video.title}
+                        description={video.description}
                       />
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-    );
-  }
-}
+                    </a>
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+      </div>
+    </div>
+  );
+};
+
 export default VideoBlock;
