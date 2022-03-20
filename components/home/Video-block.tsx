@@ -5,8 +5,6 @@ import Link from "next/link";
 const VideoCard = dynamic(() => import("../common/VideoCard"));
 
 type IProps = {};
-type IState = {};
-
 const videos = [
   {
     thumbnail: "https://wallpaperaccess.com/full/3458146.jpg",
@@ -95,7 +93,6 @@ const VideoBlock: React.FunctionComponent<IProps> = (props: IProps) => {
   return (
     <div className="bg-white">
       <div className="px-5 py-10">
-        {/* <h2 className="text-3xl text-center lg:mb-9">Recent Service</h2> */}
         <div className="flex flex-wrap justify-between">
           {videos &&
             Array.isArray(videos) &&

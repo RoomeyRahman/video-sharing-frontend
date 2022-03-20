@@ -6,3 +6,11 @@ export async function getVideos(params) {
     data: (params && params.data) || {},
   });
 }
+
+export async function getVideoById(params) {
+  console.log("service file: ", params)
+  return request(`videos/${params.id}`, {
+    method: "GET",
+    data: (params && params.data) || {},
+  });
+}

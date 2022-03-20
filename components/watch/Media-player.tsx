@@ -1,5 +1,7 @@
 import React from "react";
 import ReactPlayer from "react-player";
+import Paragraph from "antd/lib/typography/Paragraph";
+import { Avatar } from "antd";
 
 type IProps = {
   url: string;
@@ -22,8 +24,15 @@ const MediaPlayer: React.FunctionComponent<IProps> = (props: IProps) => {
           />
         </div>
         <div>
-          <div className="font-bold text-xl mb-2">{props.title}</div>
-          <p className="text-gray-700 text-base">{props.description}</p>
+          <div className="flex">
+            <Avatar src="https://joeschmoe.io/api/v1/random" />
+            <Paragraph ellipsis={{ rows: 2 }}>
+              <div className="font-bold text-xl mb-2">{props.title}</div>
+            </Paragraph>
+          </div>
+          <Paragraph ellipsis={{ rows: 2 }}>
+            <div className="text-gray-500 text-base">{props.description}</div>
+          </Paragraph>
         </div>
       </div>
     </div>
