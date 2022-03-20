@@ -7,6 +7,13 @@ export async function postUserLogin(params) {
   });
 }
 
+export async function postUserLoginRefresh(params) {
+  return request("/auth/login/refresh/", {
+    method: "POST",
+    data: (params && params.data) || {},
+  });
+}
+
 export async function postUserRegistration(params) {
   return request("/auth/register/", {
     method: "POST",

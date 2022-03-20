@@ -41,15 +41,7 @@ function Login(params: any) {
 
       switch (response.status) {
         case 200:
-          const { access, refresh } = response.data;
-
-          const userRes: any = await import("../../services/user.service").then(
-            async (service) => await service.getUserRetrive(null)
-          );
-
-          const me: any = await import("../../utils/helper").then((fn) =>
-            fn.encrypt(userRes.data)
-          );
+          const { access, refresh } = response.data;           
 
           const maxAge = 864000000 ;
           await fetch("/api/login", {
@@ -57,7 +49,7 @@ function Login(params: any) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ token: access, refresh: refresh, me: me, tokenMaxAge: maxAge }),
+            body: JSON.stringify({ token: access, refresh: refresh, tokenMaxAge: maxAge }),
           });
 
           if (Router.pathname !== "/signin") {

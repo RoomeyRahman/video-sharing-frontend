@@ -84,7 +84,7 @@ const request = (link: string, params: ReqParams, header = null) => {
       .catch((error) => {
         if (error.response) {
           const { data, config, status } = error.response;
-          const throwError = {
+          const throwError: any = {
             message: data.message || "Internal Server Error",
             status: status || 500,
           };
@@ -99,8 +99,9 @@ const request = (link: string, params: ReqParams, header = null) => {
               data,
               config.url,
               status
-            );
+            );            
             process.env.NODE_ENV === "development" && openNotification(status, config.url, data.message, data.error);
+            throwError.data = data;
           } else if (error && error.request) {
             /*
              * The request was made but no response was received, `error.request`

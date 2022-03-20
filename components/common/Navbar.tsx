@@ -93,16 +93,64 @@ export default function Navbar() {
     const cookies = cookie.parse(document.cookie);
     if (cookies && cookies.hasOwnProperty("token") && cookies.token) {
       setIsLogin(true);
-    }
-    if (cookies && cookies.hasOwnProperty("me") && cookies.me) {
-      import("../../utils/helper").then((fn) => {
-        const me = fn.decrypt(cookies.me);
-        console.log(me)
-        setMe(me);
+      const userRes: any = import("../../services/user.service").then(
+        async (service) => await service.getUserRetrive({})
+      );
+      userRes.then((res) => {
+        if (res.status === 401) {
+          setCurrentUser()
+        }
+        else if (res.status === 200){
+          setMe(res.data)
+        }
       });
-      
     }
   }, []);
+
+  const setCurrentUser = async () => {
+    const response: any = await import("../../services/user.service").then(
+      async (service) => await service.getUserRetrive({})
+    );
+    if (response && response.status === 200){
+      setMe(response.data)
+    }
+    else if (response && response.status === 401) {
+      const isRefreshed = await refreshLogin()
+      if (isRefreshed == true) {
+        setCurrentUser()
+      }
+      else {
+        // something went wrong
+      }
+    }
+  }
+
+  const refreshLogin = async () => {
+    const cookies = cookie.parse(document.cookie);
+    const refresh = cookies.refresh;
+    const response: any = await import("../../services/user.service").then(
+      async (service) =>
+        await service.postUserLoginRefresh({ data: { refresh: refresh } })
+    );
+    if (response && response.status === 200) {
+      const maxAge = 864000000;
+      await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: response.data.access,
+          refresh: refresh,
+          tokenMaxAge: maxAge,
+        }),
+      });
+      return true
+    }
+    else {
+      return false
+    }
+  };
 
   const renderLogoutRightMenu = () => {
     return (
@@ -124,8 +172,8 @@ export default function Navbar() {
   };
 
   const renderLoginRightMenu = () => {
-    const name = me['username']
-    
+    const name = me["username"];
+
     const callLogout = async () => {
       try {
         const responseLogout = await fetch("/api/logout", { method: "POST" });
@@ -136,11 +184,12 @@ export default function Navbar() {
         // console.log("error")
       }
     };
+
     const menu = (
       <Menu className="origin-top-right absolute right-0 uppercase mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
         <Menu.Item key="5">
           <span className="font-semibold whitespace-normal">
-            <Avatar src={'/avatar.jpg'} /> {name}
+            <Avatar src={"/avatar.jpg"} /> {name}
           </span>
         </Menu.Item>
         <Menu.Divider />
@@ -158,7 +207,7 @@ export default function Navbar() {
       <>
         <Dropdown overlay={menu} trigger={["click"]} className="ml-3 relative">
           <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-            <Avatar src={'/avatar.jpg'} />
+            <Avatar src={"/avatar.jpg"} />
           </a>
         </Dropdown>
       </>
