@@ -1,9 +1,8 @@
 import React, { ReactElement, useState } from "react";
-import Link from "next/link";
-import Router from "next/router";
 import dynamic from "next/dynamic";
 import { Form, Input, Button, Upload, message } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { customAlphabet } from 'nanoid'
 
 const Img = dynamic(() => import("../common/Image-loader"));
 const ErrorBoundary = dynamic(() => import("../common/Error-boundary"));
@@ -43,12 +42,16 @@ function VForm(params: any) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const handleChange = (info) => {
+    let { fileList, file } = info;
+    let formData = new FormData();
     if (info.file.status === "uploading") {
       setIsLoading(true);
       return;
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
+      const id = customAlphabet('1234567890abcdef', 10);
+      const videoFile = new File([file.originFileObj as BlobPart], id(), { lastModified: new Date().getTime(), type: 'video/mp4' });
       getBase64(info.file.originFileObj, (imageUrl) => {
         setImageUrl(imageUrl);
         setIsLoading(false);
