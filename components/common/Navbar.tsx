@@ -197,6 +197,10 @@ export default function Navbar() {
           <a>Profile</a>
         </Menu.Item>
         <Menu.Divider />
+        <Menu.Item key="4" onClick={() => Router.push("/upload")}>
+          <a>Upload Video</a>
+        </Menu.Item>
+        <Menu.Divider />
         <Menu.Item key="6" onClick={() => callLogout()}>
           Logout
         </Menu.Item>
