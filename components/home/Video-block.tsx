@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 const VideoCard = dynamic(() => import("../common/VideoCard"));
 
@@ -81,15 +82,14 @@ const videos = [
 ];
 
 const VideoBlock: React.FunctionComponent<IProps> = (props: IProps) => {
-  const [videos, setVideos] = useState<any>([])
-  useEffect(() => {    
-    import("../../services/video.service").then(
-      async (service) => await service.getVideos({})
-    ).then(res=> {
-      const results = res.data.results
-      setVideos(results)
-    });   
-    
+  const [videos, setVideos] = useState<any>([]);
+  useEffect(() => {
+    import("../../services/video.service")
+      .then(async (service) => await service.getVideos({}))
+      .then((res) => {
+        const results = res.data.results;
+        setVideos(results);
+      });
   }, []);
 
   return (
@@ -107,12 +107,19 @@ const VideoBlock: React.FunctionComponent<IProps> = (props: IProps) => {
                   className="md:w-1/2 lg:w-1/4 transform hover:scale-102 duration-300 transition-transform"
                 >
                   <div className="p-1 w-full rounded-md ">
-                    <VideoCard
-                      thumbnail={video.thumbnail || 'https://wallpaperaccess.com/full/3458146.jpg'}
-                      title={video.title}
-                      description={video.description}
-                      tags={video.tags || ["photography", "nature"]}
-                    />
+                    <Link href={`/watch/${video.id}`} passHref>
+                      <a>
+                        <VideoCard
+                          thumbnail={
+                            video.thumbnail ||
+                            "https://wallpaperaccess.com/full/3458146.jpg"
+                          }
+                          title={video.title}
+                          description={video.description}
+                          tags={video.tags || ["photography", "nature"]}
+                        />
+                      </a>
+                    </Link>
                   </div>
                 </div>
               );
