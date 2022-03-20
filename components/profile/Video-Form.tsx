@@ -27,14 +27,13 @@ function getBase64(img, callback) {
 function beforeUpload(file) {
   const isMp4 = file.type === "video/mp4";
   if (!isMp4) {
-    message.error("You can only upload JPG/PNG file!");
+    message.error("You can only upload mp4 file!");
   }
 
   const isLt100M = file.size / 1024 / 1024 < 100;
   if (!isLt100M) {
     message.error("Image must smaller than 100MB!");
   }
-  return true
   return isMp4 && isLt100M;
 }
 

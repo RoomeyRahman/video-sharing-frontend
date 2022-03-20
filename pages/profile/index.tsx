@@ -6,6 +6,9 @@ const VideoBlock = dynamic(() => import("../../components/home/Video-block"));
 const ProfileCard = dynamic(
   () => import("../../components/profile/Profile-Card")
 );
+const VForm = dynamic(
+  () => import("../../components/profile/Video-Form")
+);
 
 const Home: NextPage = () => {
   const title = "Share your creativity with your story";
@@ -21,6 +24,9 @@ const Home: NextPage = () => {
           <div className="w-full md:w-9/12 mx-2">
             <VideoBlock />
           </div>
+          {/* <div className="w-full md:w-9/12 mx-2">
+            <VForm />
+          </div> */}
         </div>
       </div>
     </MasterLayout>
