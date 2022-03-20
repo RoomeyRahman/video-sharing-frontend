@@ -28,13 +28,6 @@ export default function logout(req, res) {
       sameSite: "strict",
       path: "/",
     }),
-    cookie.serialize("me", "", {
-      httpOnly: true,
-      // secure: process.env.NODE_ENV !== "development",
-      expires: new Date(0),
-      sameSite: "strict",
-      path: "/",
-    }),
   ]);
   res.statusCode = 200;
   res.json({ success: true });
